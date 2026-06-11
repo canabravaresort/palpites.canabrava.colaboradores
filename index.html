@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Palpite dos Braveiros | Cana Brava</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="page-bg"></div>
+
+  <header class="hero">
+    <nav class="topbar">
+      <div class="brand">
+        <img
+          src="./assets/logo-cana-brava.png"
+          alt="Cana Brava Resort"
+          class="brand-logo"
+        >
+      </div>
+
+      <a class="admin-link" href="admin.html">
+        Painel Admin
+      </a>
+    </nav>
+
+    <section class="hero-content">
+      <p class="eyebrow">Copa dos colaboradores</p>
+
+      <h1>Palpite dos Braveiros</h1>
+
+      <p class="hero-text">
+        Entre com sua conta Google, escolha os jogos, envie seus palpites e acompanhe o ranking geral dos colaboradores.
+      </p>
+    </section>
+  </header>
+
+  <main class="container grid-main">
+
+    <!-- LOGIN GOOGLE -->
+    <section id="authArea" class="card login-card">
+      <p class="mini-label">Entrar na torcida</p>
+      <h2>Acesse com Google</h2>
+
+      <p>
+        Faça login para participar do ranking dos colaboradores. Depois, informe seu nome e número de matrícula na hora de enviar o palpite.
+      </p>
+
+      <button id="googleLoginBtn" class="primary-btn" type="button">
+        Entrar com Google
+      </button>
+
+      <p class="legal-note">
+        Seu e-mail não aparece no ranking público. Ele é usado apenas para vincular seus palpites ao login.
+      </p>
+    </section>
+
+    <!-- ÁREA LOGADA -->
+    <section id="appArea" class="card form-card hidden">
+      <div class="section-title-row">
+        <div>
+          <p class="mini-label">Você está logado</p>
+          <h2>Enviar palpite</h2>
+        </div>
+
+        <span class="ball-badge">⚽</span>
+      </div>
+
+      <div class="logged-user-card">
+        <div>
+          <strong id="loggedUserName">Colaborador</strong>
+          <span id="loggedUserEmail"></span>
+        </div>
+
+        <button id="logoutBtn" class="secondary-btn" type="button">
+          Sair
+        </button>
+      </div>
+
+      <form id="predictionForm" class="prediction-form">
+        <label>
+          Nome do colaborador
+          <input
+            id="collaboratorName"
+            type="text"
+            placeholder="Ex.: Maria Souza"
+            required
+            maxlength="80"
+          />
+        </label>
+
+        <label>
+          Número de matrícula
+          <input
+            id="registrationNumber"
+            type="text"
+            placeholder="Ex.: 12345"
+            required
+            maxlength="30"
+          />
+        </label>
+
+        <label>
+          Escolha o jogo
+          <select id="gameSelect" required>
+            <option value="">Carregando jogos...</option>
+          </select>
+        </label>
+
+        <!-- ÁREA VISUAL DA PARTIDA -->
+        <div id="matchArea" class="hidden">
+
+          <section class="match-visual" aria-label="Visual da partida selecionada">
+
+            <div class="team-flag-card team-home">
+              <div class="flag-frame">
+                <span id="teamAEmoji" class="flag-emoji">🇧🇷</span>
+
+                <img
+                  id="teamAFlag"
+                  src="https://flagcdn.com/br.svg"
+                  alt="Bandeira do Time A"
+                  loading="lazy"
+                />
+              </div>
+
+              <strong id="teamACode">BRA</strong>
+              <span id="teamAVisualName">Brasil</span>
+            </div>
+
+            <div class="match-center-mark">
+              <span>PALPITE</span>
+              <strong>X</strong>
+            </div>
+
+            <div class="team-flag-card team-away">
+              <div class="flag-frame alt">
+                <span id="teamBEmoji" class="flag-emoji">🇲🇦</span>
+
+                <img
+                  id="teamBFlag"
+                  src="https://flagcdn.com/ma.svg"
+                  alt="Bandeira do Time B"
+                  loading="lazy"
+                />
+              </div>
+
+              <strong id="teamBCode">MAR</strong>
+              <span id="teamBVisualName">Marrocos</span>
+            </div>
+
+          </section>
+
+          <!-- PLACAR DO PALPITE -->
+          <div class="score-box">
+            <div class="team-score">
+              <span id="teamAName">Time A</span>
+
+              <input
+                id="guessA"
+                type="number"
+                min="0"
+                max="30"
+                inputmode="numeric"
+                required
+                disabled
+              />
+            </div>
+
+            <span class="versus">x</span>
+
+            <div class="team-score">
+              <span id="teamBName">Time B</span>
+
+              <input
+                id="guessB"
+                type="number"
+                min="0"
+                max="30"
+                inputmode="numeric"
+                required
+                disabled
+              />
+            </div>
+          </div>
+
+          <!-- PÊNALTIS APENAS NO MATA-MATA -->
+          <div id="penaltyArea" class="hidden penalty-area">
+            <label>
+              Se empatar no mata-mata, quem passa nos pênaltis?
+              <select id="penaltyWinner">
+                <option value="">Selecione o classificado</option>
+                <option id="penaltyTeamAOption" value="A">Time A</option>
+                <option id="penaltyTeamBOption" value="B">Time B</option>
+              </select>
+            </label>
+          </div>
+
+        </div>
+
+        <button class="primary-btn" type="submit">
+          Enviar meu palpite
+        </button>
+
+        <p id="formMessage" class="message"></p>
+      </form>
+    </section>
+
+    <!-- RANKING GERAL -->
+    <section class="card ranking-card">
+      <div class="section-title-row">
+        <div>
+          <p class="mini-label">Disputa dos Braveiros</p>
+          <h2>Ranking Geral</h2>
+        </div>
+
+        <span class="trophy-badge">🏆</span>
+      </div>
+
+      <div id="rankingList" class="ranking-list empty-state">
+        Carregando ranking geral...
+      </div>
+
+      <div class="rank-divider"></div>
+
+      <div class="section-title-row compact-title-row">
+        <div>
+          <p class="mini-label">Placar por jogo</p>
+          <h2>Ranking da Partida</h2>
+        </div>
+      </div>
+
+      <label class="game-rank-filter">
+        Escolha a partida
+
+        <select id="gameRankingSelect">
+          <option value="">Carregando partidas...</option>
+        </select>
+      </label>
+
+      <div id="gameRankingList" class="ranking-list empty-state">
+        Carregando ranking da partida...
+      </div>
+    </section>
+
+  </main>
+
+  <!-- VISUALIZAR JOGO ESPECÍFICO -->
+  <section class="container games-section">
+    <div class="section-heading">
+      <p class="mini-label">Consultar partida</p>
+      <h2>Visualizar jogo</h2>
+    </div>
+
+    <label class="public-game-picker">
+      Escolha uma partida
+      <select id="publicGameSelect">
+        <option value="">Carregando partidas...</option>
+      </select>
+    </label>
+
+    <div id="gamesList" class="games-list">
+      <div class="empty-state">Selecione uma partida para visualizar.</div>
+    </div>
+  </section>
+
+  <!-- REGRAS -->
+  <section class="container card rules-card">
+    <h2>Como pontua?</h2>
+
+    <div class="rules-grid">
+      <div>
+        <strong>10 pts</strong>
+        <span>Placar exato</span>
+      </div>
+
+      <div>
+        <strong>5 pts</strong>
+        <span>Vencedor ou classificado</span>
+      </div>
+
+      <div>
+        <strong>2 pts</strong>
+        <span>Gols de um dos times</span>
+      </div>
+
+      <div>
+        <strong>3 pts</strong>
+        <span>Acertou pênaltis no mata-mata</span>
+      </div>
+
+      <div>
+        <strong>Desempate</strong>
+        <span>Quem palpitou primeiro fica na frente</span>
+      </div>
+    </div>
+
+    <p class="legal-note">
+      Ação recreativa interna para colaboradores do Cana Brava Resort, sem vínculo com marcas oficiais de futebol ou torneios internacionais.
+    </p>
+  </section>
+
+  <footer class="footer">
+    <p>Palpite dos Braveiros • Cana Brava Resort</p>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

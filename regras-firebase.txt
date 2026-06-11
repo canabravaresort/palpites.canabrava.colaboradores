@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "canabravaresort2@gmail.com",
+          "marketing2@canabravaresort.com.br"
+        ];
+    }
+
+    function gameExists(gameId) {
+      return exists(/databases/$(database)/documents/games/$(gameId));
+    }
+
+    function gameDoc(gameId) {
+      return get(/databases/$(database)/documents/games/$(gameId));
+    }
+
+    function predictionStillOpen(gameId) {
+      return gameExists(gameId)
+        && gameDoc(gameId).data.status == "open"
+        && request.time < gameDoc(gameId).data.predictionCloseAt;
+    }
+
+    match /games/{gameId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow delete: if isAdmin();
+    }
+
+    match /predictions/{predictionId} {
+      allow read: if true;
+
+      allow create, update: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && predictionId == request.resource.data.gameId + "_" + request.auth.uid
+        && predictionStillOpen(request.resource.data.gameId);
+
+      allow delete: if isAdmin();
+    }
+  }
+}

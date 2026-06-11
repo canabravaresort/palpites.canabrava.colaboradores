@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin | Palpite no Paraíso</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+</head>
+
+<body>
+  <div class="page-bg"></div>
+
+  <header class="admin-header">
+    <div class="brand">
+      <img src="./assets/logo-cana-brava.png" alt="Cana Brava Resort" class="brand-logo">
+    </div>
+
+    <a class="admin-link" href="index.html">Ver site</a>
+  </header>
+
+  <main class="container admin-container">
+    <section id="loginArea" class="card login-card">
+      <p class="mini-label">Área restrita</p>
+      <h1>Painel Admin</h1>
+      <p>Entre com e-mail e senha liberados como admin para importar jogos, lançar resultados e exportar palpites.</p>
+
+      <div class="admin-auth-form">
+        <input id="adminEmail" type="email" placeholder="E-mail do admin" autocomplete="email" required />
+        <input id="adminPassword" type="password" placeholder="Senha" autocomplete="current-password" required />
+        <button id="loginBtn" class="primary-btn" type="button">Entrar</button>
+      </div>
+
+      <p id="loginMessage" class="message"></p>
+    </section>
+
+    <section id="adminArea" class="admin-panel hidden">
+      <div class="admin-session-row">
+        <button id="logoutBtn" class="secondary-btn" type="button">Sair do admin</button>
+      </div>
+
+      <section class="card">
+        <p class="mini-label">Fase de grupos</p>
+        <h2>Importar confrontos</h2>
+        <p class="legal-note no-margin-top">
+          Importa os 72 jogos da fase de grupos. O botão é seguro para clicar mais de uma vez: ele atualiza os jogos pelo mesmo ID sem duplicar.
+        </p>
+
+        <div class="admin-actions spacing-top">
+          <button id="seedGroupBtn" class="primary-btn" type="button">Importar fase de grupos</button>
+        </div>
+
+        <p id="seedMessage" class="message"></p>
+      </section>
+
+      <section class="card">
+        <p class="mini-label">Mata-mata</p>
+        <h2>Cadastrar jogo com pênaltis</h2>
+        <p class="legal-note no-margin-top">
+          Use esta área apenas a partir do mata-mata. Esses jogos exibem a opção de pênaltis no palpite.
+        </p>
+
+        <form id="knockoutForm" class="admin-grid-form">
+          <label>
+            Time 1
+            <select id="teamA" required></select>
+          </label>
+
+          <label>
+            Time 2
+            <select id="teamB" required></select>
+          </label>
+
+          <label>
+            Data e hora
+            <input id="gameDate" type="datetime-local" required />
+          </label>
+
+          <label>
+            Fase
+            <input id="gameGroup" type="text" placeholder="Ex.: Oitavas / Quartas" value="Mata-mata" />
+          </label>
+
+          <button class="secondary-btn" type="submit">Cadastrar mata-mata</button>
+        </form>
+
+        <p id="gameMessage" class="message"></p>
+      </section>
+
+      <section class="card danger-zone">
+        <p class="mini-label">Controle geral</p>
+        <h2>Ações rápidas</h2>
+
+        <div class="admin-actions">
+          <button id="exportCsvBtn" class="secondary-btn" type="button">Exportar palpites CSV</button>
+          <button id="resetPredictionsBtn" class="danger-btn" type="button">Apagar todos os palpites</button>
+        </div>
+
+        <p class="legal-note">Use com cuidado. Depois de apagar, não tem VAR que recupere.</p>
+      </section>
+
+      <section class="card">
+        <div class="section-title-row">
+          <div>
+            <p class="mini-label">Resultados</p>
+            <h2>Finalizar jogos</h2>
+          </div>
+        </div>
+
+        <label class="admin-game-picker">
+          Escolha a partida para gerenciar
+          <select id="adminGameSelect">
+            <option value="">Carregando partidas...</option>
+          </select>
+        </label>
+
+        <div id="adminGamesList" class="admin-games-list empty-state">
+          Selecione uma partida para lançar resultado.
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>

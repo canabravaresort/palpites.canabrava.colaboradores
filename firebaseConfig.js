@@ -12,5 +12,5 @@ export const firebaseConfig = {
 export const ADMIN_EMAILS = [
   "marketing2@canabravaresort.com.br",
   "bruno@canabravaresort.com.br",
-  "Esportelazer@canabravaresort.com.br"
+  "esportelazer@canabravaresort.com.br"
 ];

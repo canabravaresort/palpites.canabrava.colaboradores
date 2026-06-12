@@ -10,7 +10,6 @@ export const firebaseConfig = {
 // E-mail(s) com permissão de admin no painel.
 // Crie esse usuário em Firebase Auth > Users usando e-mail/senha.
 export const ADMIN_EMAILS = [
-  "canabravaresort2@gmail.com",
   "marketing2@canabravaresort.com.br",
   "bruno@canabravaresort.com.br",
   "Esportelazer@canabravaresort.com.br"
